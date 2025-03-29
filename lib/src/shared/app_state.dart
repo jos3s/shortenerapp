@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:shortenerapp/src/core/models/url_shortener/url_shortener.response.dart';
 
 class AppState extends ChangeNotifier {
-  String? accessToken;
-
   var urlShorteners = [];
 
   addNewUrl(UrlShortenerResponse response) {
@@ -16,23 +14,12 @@ class AppState extends ChangeNotifier {
     notifyListeners();
   }
 
-  saveToken(String token) {
-    accessToken = token;
-    notifyListeners();
-  }
-
-  clearToken() {
-    accessToken = null;
-    notifyListeners();
-  }
-
   clearLocalUrls() {
     urlShorteners = [];
     notifyListeners();
   }
 
   logout() {
-    clearToken();
     clearLocalUrls();
     notifyListeners();
   }
