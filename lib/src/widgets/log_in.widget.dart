@@ -19,7 +19,7 @@ class LogInWidget extends StatelessWidget {
                   SizedBox(height: 20),
                   ElevatedButton(
                     onPressed: () {
-                      Navigator.of(context).pushReplacementNamed('/');
+                      Navigator.of(context).pushReplacementNamed('/login');
                     },
                     child: Text('Login'),
                   ),

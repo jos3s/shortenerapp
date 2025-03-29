@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:shortenerapp/src/pages/app.page.dart';
-import 'package:shortenerapp/src/pages/login/login.page.dart';
 import 'package:shortenerapp/src/shared/app_state.dart';
 import 'package:shortenerapp/src/shared/routes.dart';
 
