@@ -1,13 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:shortenerapp/src/core/models/url_shortener/url_shortener.response.dart';
-import 'package:shortenerapp/src/forms/shortener.form.dart';
 import 'package:shortenerapp/src/pages/historic/historic.page.dart';
 import 'package:shortenerapp/src/pages/home/home.page.dart';
-import 'package:shortenerapp/src/shared/app_state.dart';
 import 'package:shortenerapp/src/shared/pages.enum.dart';
-import 'package:shortenerapp/src/widgets/account.widget.dart';
-import 'package:shortenerapp/src/widgets/url_card.widget.dart';
 
 class AppPage extends StatefulWidget {
   const AppPage({super.key, required this.title});
@@ -23,9 +17,6 @@ class _MyHomePageState extends State<AppPage> {
 
   @override
   Widget build(BuildContext context) {
-    var state = context.watch<AppState>();
-
-    
     Widget page;
     switch (selectedPage) {
       case Pages.home:
@@ -36,9 +27,8 @@ class _MyHomePageState extends State<AppPage> {
         break;
     }
 
-
     return Scaffold(
-      appBar: AppBar(title: Text(widget.title), actions: [AccountWidget()]),
+      appBar: AppBar(title: Text(widget.title)),
       body: page,
       bottomNavigationBar: _navigationBar(),
     );
@@ -48,7 +38,6 @@ class _MyHomePageState extends State<AppPage> {
     return NavigationBar(
       destinations: [
         NavigationDestination(icon: Icon(Icons.home), label: 'Home'),
-        //NavigationDestination(icon: Icon(Icons.history), label: 'History'),
         NavigationDestination(icon: Icon(Icons.history), label: 'Historic'),
       ],
       onDestinationSelected: (value) {
