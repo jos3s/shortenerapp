@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shortenerapp/src/core/api/shortener.api.dart';
-import 'package:shortenerapp/src/core/models/url_shortener/create-url-shortener.request.dart';
+import 'package:shortenerapp/src/pages/home/home.controller.dart';
 import 'package:shortenerapp/src/shared/app_state.dart';
 
-class ShortenerForm extends StatefulWidget {
-  const ShortenerForm({super.key});
+class HomeForm extends StatefulWidget {
+  const HomeForm({super.key});
 
   @override
-  State<ShortenerForm> createState() => _ShortenerFormState();
+  State<HomeForm> createState() => _HomeFormState();
 }
 
-class _ShortenerFormState extends State<ShortenerForm> {
+class _HomeFormState extends State<HomeForm> {
   final _formKey = GlobalKey<FormState>();
+  final _homeController = HomeController();
 
   String? url;
 
@@ -32,7 +32,7 @@ class _ShortenerFormState extends State<ShortenerForm> {
                 labelText: 'Url',
               ),
               initialValue: url,
-              onSaved: (newValue) => {url = newValue},
+              controller: _homeController.urlController,
             ),
             SizedBox(height: 20),
             Row(
@@ -55,13 +55,8 @@ class _ShortenerFormState extends State<ShortenerForm> {
       try {
         _formKey.currentState!.save();
 
-        state.addNewUrl(
-          await ShortenerApi().post(
-            CreateUrlShortenerRequest(url: url!),
-            state.accessToken
-          ),
-        );
-
+        _homeController.saveNewUrl(state);
+        
         _formKey.currentState!.reset();
       } catch (ex) {
         ScaffoldMessenger.of(

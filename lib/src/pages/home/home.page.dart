@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shortenerapp/src/core/models/url_shortener/url_shortener.response.dart';
-import 'package:shortenerapp/src/forms/shortener.form.dart';
+import 'package:shortenerapp/src/pages/home/home.form.dart';
 import 'package:shortenerapp/src/shared/app_state.dart';
 import 'package:shortenerapp/src/widgets/url_card.widget.dart';
 
@@ -24,7 +24,7 @@ class _HomePageState extends State<HomePage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              ShortenerForm(),
+              HomeForm(),
               SizedBox(height: 20),
               for (UrlShortenerResponse urlResponse in state.urlShorteners)
                 UrlCardWidget(
