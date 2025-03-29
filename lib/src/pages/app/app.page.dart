@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:shortenerapp/src/core/storage/secure_storage.dart';
+import 'package:shortenerapp/src/pages/app/menu_app.widget.dart';
 import 'package:shortenerapp/src/pages/historic/historic.page.dart';
 import 'package:shortenerapp/src/pages/home/home.page.dart';
+import 'package:shortenerapp/src/shared/app_state.dart';
 import 'package:shortenerapp/src/shared/pages.enum.dart';
 
 class AppPage extends StatefulWidget {
@@ -17,6 +21,7 @@ class _MyHomePageState extends State<AppPage> {
 
   @override
   Widget build(BuildContext context) {
+
     Widget page;
     switch (selectedPage) {
       case Pages.home:
@@ -28,7 +33,7 @@ class _MyHomePageState extends State<AppPage> {
     }
 
     return Scaffold(
-      appBar: AppBar(title: Text(widget.title)),
+      appBar: AppBar(title: Text(widget.title), actions: [MenuAppWidget()]),
       body: page,
       bottomNavigationBar: _navigationBar(),
     );
