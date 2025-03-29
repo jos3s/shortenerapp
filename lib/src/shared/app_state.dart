@@ -16,6 +16,24 @@ class AppState extends ChangeNotifier {
     notifyListeners();
   }
 
-  saveToken(String token) => accessToken = token;
-  clearToken() => accessToken = null;
+  saveToken(String token) {
+    accessToken = token;
+    notifyListeners();
+  }
+
+  clearToken() {
+    accessToken = null;
+    notifyListeners();
+  }
+
+  clearLocalUrls() {
+    urlShorteners = [];
+    notifyListeners();
+  }
+
+  logout() {
+    clearToken();
+    clearLocalUrls();
+    notifyListeners();
+  }
 }
