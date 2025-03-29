@@ -1,19 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shortenerapp/src/core/api/shortener.api.dart';
-import 'package:shortenerapp/src/core/models/auth/login.request.dart';
+import 'package:shortenerapp/src/pages/login/login.controller.dart';
 import 'package:shortenerapp/src/shared/app_state.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({super.key});
 
   @override
-  State<LoginForm> createState() => _loginFormState();
+  State<LoginForm> createState() => _LoginFormState();
 }
 
-class _loginFormState extends State<LoginForm> {
+class _LoginFormState extends State<LoginForm> {
   final loginFormKey = GlobalKey<FormState>();
-  String? email, password;
+  final _loginController = LoginController();
+
+  @override
+  void initState() {
+    super.initState();
+    _loginController.fetchSecureStorageData();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,23 +38,9 @@ class _loginFormState extends State<LoginForm> {
             ],
           ),
           SizedBox(height: 20),
-          TextFormField(
-            decoration: InputDecoration(
-              border: OutlineInputBorder(),
-              labelText: 'Email',
-            ),
-            validator: _validateEmail,
-            onSaved: (newValue) => {email = newValue},
-          ),
+          _emailFormField(),
           SizedBox(height: 20),
-          TextFormField(
-            decoration: InputDecoration(
-              border: OutlineInputBorder(),
-              labelText: 'Password',
-            ),
-            validator: _validatePassword,
-            onSaved: (newValue) => {password = newValue},
-          ),
+          _passwordFormField(),
           SizedBox(height: 20),
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
@@ -67,27 +58,42 @@ class _loginFormState extends State<LoginForm> {
     );
   }
 
-  String? _validateEmail(value) {
-    if (value == null || value.isEmpty) return 'Email is not empty';
-    return null;
+  TextFormField _emailFormField() {
+    return TextFormField(
+      decoration: InputDecoration(
+        border: OutlineInputBorder(),
+        labelText: 'Email',
+      ),
+      validator: _loginController.validateEmail,
+      controller: _loginController.emailController,
+    );
   }
 
-  String? _validatePassword(value) {
-    if (value == null || value.isEmpty) return 'Password is not empty';
-    return null;
+  TextFormField _passwordFormField() {
+    return TextFormField(
+      decoration: InputDecoration(
+        border: OutlineInputBorder(),
+        labelText: 'Password',
+      ),
+      validator: _loginController.validatePassword,
+      controller: _loginController.passwordController,
+      obscureText: true,
+    );
   }
 
   Future<void> auth(AppState state, BuildContext context) async {
     if (loginFormKey.currentState!.validate()) {
       loginFormKey.currentState!.save();
 
-      var response = await ShortenerApi().login(
-        LoginRequest(email: email!, password: password!),
-      );
+      try {
+        await _loginController.login();
 
-      state.saveToken(response.accessToken);
-
-      Navigator.of(context).pushReplacementNamed('/home');
+        Navigator.of(context).pushReplacementNamed('/');
+      } catch (ex) {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(ex.toString())));
+      }
     }
   }
 }
