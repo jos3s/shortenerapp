@@ -31,13 +31,24 @@ class UrlCardWidget extends StatelessWidget {
           children: [
             Row(
               children: [
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(url, style: TextStyle(fontSize: 20)),
-                    Text(originalUrl, style: TextStyle(fontSize: 13, fontStyle: FontStyle.italic)),
-                  ],
+                Flexible(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(url, style: TextStyle(fontSize: 20)),
+                      Text(
+                        originalUrl,
+                        style: TextStyle(
+                          fontSize: 13,
+                          fontStyle: FontStyle.italic,
+                        ),
+                        overflow: TextOverflow.ellipsis,
+                        softWrap: false,
+                        maxLines: 1,
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
