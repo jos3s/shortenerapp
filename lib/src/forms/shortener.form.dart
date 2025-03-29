@@ -58,6 +58,7 @@ class _ShortenerFormState extends State<ShortenerForm> {
         state.addNewUrl(
           await ShortenerApi().post(
             CreateUrlShortenerRequest(url: url!),
+            state.accessToken
           ),
         );
 
